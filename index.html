@@ -1,0 +1,95 @@
+ <!-- shift + 1 + enter -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="page-container">    
+            <div id="heading"><p>This is a Jokes</p> </div>
+            <div id="jokes"><p>page is loading . . . </p></div>
+            <button id="jokebtn">Next</button>
+        </div>
+    </div>
+
+<script>
+
+// we are fetching the element by their ids
+const jokes = document.getElementById('jokes');
+const jokebtn = document.querySelector('#jokebtn');
+
+const generatejokes = () => {
+// we have created variable with header object
+// the header value we got in postman i.e accept, we are mentioning here to set 
+// it according to content-type of API website
+
+    const setHeader = {
+        headers:{
+          Accept : "application/json"
+        }
+    }
+    
+
+    // here we are fetching the data from this website and especially set header object
+    // setheader object means specific value from that website
+    fetch('https://icanhazdadjoke.com', setHeader)
+    // .then is a method of promises
+    // we will get data from site in json format
+    .then( (res) => res.json())
+    // first we pass argument name (data)
+    // In 'data.joke' , the joke data from website will be apply to element-id 'jokes'
+    // from html i.e jokes.innerHTML 
+    // we have called the key 'joke' from API and using object data
+    .then((data) => {
+        jokes.innerHTML = data.joke;     
+    })
+    // we any error occures we are gonna fire a catch eventwhich will show error
+    .catch((error) => {
+        console.log(error);
+    })
+}
+// we have added event listener to button and given a function to execute when button 
+// will be click
+jokebtn.addEventListener('click',generatejokes);
+// we are calling that function
+generatejokes();
+
+// GET https://icanhazdadjoke.com/ fetch a random dad joke.
+
+
+// Description of Project : 
+
+// On Browser :
+// First go to the desire API website eg. icanhazdadjoke.com
+// inspect => Network => refresh page => manifest => content-type
+// content-type : application/json
+// copy the content-type value
+
+// In Postman :
+// put link in a Postman => GET => https://icanhazdadjoke.com
+// Header => Accept
+// write new header as accept and then value application/json
+// postman will get the all API values from API website posted in GET
+// will provide detail about API
+// eg.
+//    "id": "vkV0L6wcFlb",
+//    "joke": "Did you hear about the runner who was criticized? He just took it in stride",
+//    "status": 200
+// above are the key and value of following API like id,joke,status
+// we are gonna use joke id since we only want joke
+
+// In Javascript :
+// <div id="jokes"><p>page is loading . . . </p></div>
+// we are working on above paragraph where it will show the jokes and we assign it id 
+// as jokes.
+// 
+  
+</script>
+
+</body>
+</html>
